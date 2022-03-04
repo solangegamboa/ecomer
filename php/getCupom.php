@@ -24,10 +24,8 @@ if ($_POST) {
                 echo json_encode(['message' => 'Seu cupom: <strong>' . $fetch[1] . '</strong>', 'status' => 'sucesso']);
                 $sql = "UPDATE cupom SET resgatado = '1', dt_resgate = NOW() WHERE id = '" . $fetch[0] . "'";
                 echo $sql;
-                if(mysqli_query($mysqli, $sql)){
-                    echo "Records were updated successfully.";
-                } else {
-                    echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+                if (!mysqli_query($mysqli, $sql)) {
+                    echo "ERROR: Could not able to execute $sql. " . mysqli_error($mysqli);
                 }
                 exit();
             }
