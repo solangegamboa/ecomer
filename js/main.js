@@ -41,8 +41,9 @@
                             $submit.css('display', 'block').text(waitText);
                         },
                         success: function (msg) {
-                            if (msg !== 'Matrícula não possui cupom disponível.') {
-                                msg += '<br> Resgate em: App IFood > Perfil > Pagamentos > Resgatar IFood Card'
+                            var mjson = JSON.parse(msg);
+                            if (mjson.status === 'success') {
+                                msg = mjson.mensagem;
                                 $('#form-message-success').html(msg);
                                 $('#form-message-warning').hide();
                                 setTimeout(function () {
@@ -64,7 +65,7 @@
                                 }, 1400);
 
                             } else {
-                                $('#form-message-warning').html(msg);
+                                $('#form-message-warning').html(mjson.mensagem);
                                 $('#form-message-warning').fadeIn();
                                 $submit.css('display', 'none');
                             }

@@ -1,15 +1,39 @@
 <?php
 
-function dbConn($DBname) {
-    $dbconn = new mysqli('127.0.0.1', 'root', 'Dm$M20@zBx50ZN', 'ecomer');
-    mysqli_set_charset($dbconn,"UTF8");
-    return $dbconn;
-}
-
-if($_POST) {
-    if($_POST['cpf']) {
-        echo 'XXXXXX-XXXXXX-XXXXXX-XXXXX';
+if ($_POST) {
+    if ($_POST['cpf']) {
+        $user_arr = [];
+        $mysqli = new mysqli('127.0.0.1', 'root', 'Dm$M20@zBx50ZN', 'ecomer');
+        if ($mysqli->connect_errno) {
+            echo "Failed to connect to MySQL: " . $mysqli->connect_error;
+            exit();
+        }
+        
+        // Perform query
+        if ($result = $mysqli->query("SELECT * FROM cupom WHERE cpf = '" . $_POST['cpf'] . "' AND resgatado = 0")) {
+            if ($result->num_rows <= 0) {
+                echo json_encode(['message' => 'Desculpe não encontramos o seu nome na nossa lista, Quem sabe da próxima vez.', 'status' => 'error']);
+                exit();
+            }
+            
+            $fetch = [];
+            foreach ($result->fetch_assoc() as $res) {
+                $fetch[] = $res;
+            }
+            if (!empty($fetch)) {
+                echo json_encode(['message' => $fetch[1] . '<br> Resgate em: App IFood > Perfil > Pagamentos > Resgatar IFood Card', 'status' => 'sucesso']);
+                $sql = "UPDATE cupom SET resgatado = 1 AND dt_resgate = NOW() WHERE cupom = '" . $fetch[1] . "'";
+                $stmt = $mysqli->prepare($sql);
+                $stmt->execute();
+                exit();
+            }
+            
+            // Free result set
+            $result->free_result();
+        }
+        
+        $mysqli->close();
     } else {
-        echo 'Matrícula não possui cupom disponível.';
+        echo json_encode(['message' => 'Desculpe não encontramos o seu nome na nossa lista, Quem sabe da próxima vez.', 'status' => 'error']);
     }
 }
