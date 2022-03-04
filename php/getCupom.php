@@ -21,8 +21,8 @@ if ($_POST) {
                 $fetch[] = $res;
             }
             if (!empty($fetch)) {
-                echo json_encode(['message' => $fetch[1], 'status' => 'sucesso']);
-                $mysqli->query("UPDATE cupom SET resgatado = 1 AND dt_resgate = NOW() WHERE cupom = '" . $fetch[1] . "'");
+                echo json_encode(['message' => 'Seu cupom: <strong>' . $fetch[1] . '</strong>', 'status' => 'sucesso']);
+                $mysqli->query("UPDATE cupom SET resgatado = 1 AND dt_resgate = NOW() WHERE id = '" . $fetch[0] . "'");
                 exit();
             }
             
@@ -32,6 +32,6 @@ if ($_POST) {
         
         $mysqli->close();
     } else {
-        echo json_encode(['message' => 'Desculpe não encontramos o seu nome na nossa lista, Quem sabe da próxima vez.', 'status' => 'error']);
+        echo json_encode(['message' => 'Preencha o CPF corretamente.', 'status' => 'error']);
     }
 }
