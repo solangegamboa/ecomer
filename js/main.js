@@ -29,7 +29,7 @@
 
                 submitHandler: function (form) {
                     var $submit = $('.submitting'),
-                        waitText = 'Submitting...';
+                        waitText = 'Resgatando....';
 
                     $.ajax({
                         type: 'POST',
@@ -47,9 +47,6 @@
                                 setTimeout(function () {
                                     $('#contactForm').fadeIn();
                                 }, 1000);
-                                setTimeout(function () {
-                                    $('#form-message-success').fadeIn();
-                                }, 1400);
 
                                 setTimeout(function () {
                                     $submit.css('display', 'none').text(waitText);
