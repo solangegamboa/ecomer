@@ -22,7 +22,13 @@ if ($_POST) {
             }
             if (!empty($fetch)) {
                 echo json_encode(['message' => 'Seu cupom: <strong>' . $fetch[1] . '</strong>', 'status' => 'sucesso']);
-                $mysqli->query("UPDATE cupom SET resgatado = 1 AND dt_resgate = NOW() WHERE id = '" . $fetch[0] . "'");
+                $sql = "UPDATE cupom SET resgatado = 1 AND dt_resgate = NOW() WHERE id = '" . $fetch[0] . "'";
+                echo $sql;
+                if(mysqli_query($mysqli, $sql)){
+                    echo "Records were updated successfully.";
+                } else {
+                    echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+                }
                 exit();
             }
             
