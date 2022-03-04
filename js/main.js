@@ -1,85 +1,86 @@
-(function($) {
+(function ($) {
 
-	"use strict";
+    'use strict';
 
 
-  // Form
-	var contactForm = function() {
-		if ($('#contactForm').length > 0 ) {
-			$( "#contactForm" ).validate( {
-				rules: {
-					name: "required",
-					subject: "required",
-					email: {
-						required: true,
-						email: true
-					},
-					message: {
-						required: true,
-						minlength: 5
-					}
-				},
-				messages: {
-					name: "Please enter your name",
-					subject: "Please enter your subject",
-					email: "Please enter a valid email address",
-					message: "Please enter a message"
-				},
-				/* submit via ajax */
-				
-				submitHandler: function(form) {		
-					var $submit = $('.submitting'),
-						waitText = 'Submitting...';
+    // Form
+    var contactForm = function () {
+        if ($('#contactForm').length > 0) {
+            $('#contactForm').validate({
+                rules: {
+                    name: 'required',
+                    subject: 'required',
+                    email: {
+                        required: true,
+                        email: true
+                    },
+                    message: {
+                        required: true,
+                        minlength: 5
+                    }
+                },
+                messages: {
+                    name: 'Please enter your name',
+                    subject: 'Please enter your subject',
+                    email: 'Please enter a valid email address',
+                    message: 'Please enter a message'
+                },
+                /* submit via ajax */
 
-					$.ajax({   	
-				      type: "POST",
-				      url: "php/sendEmail.php",
-				      data: $(form).serialize(),
+                submitHandler: function (form) {
+                    var $submit = $('.submitting'),
+                        waitText = 'Submitting...';
 
-				      beforeSend: function() { 
-				      	$submit.css('display', 'block').text(waitText);
-				      },
-				      success: function(msg) {
-		               if (msg == 'OK') {
-		               	$('#form-message-warning').hide();
-				            setTimeout(function(){
-		               		$('#contactForm').fadeIn();
-		               	}, 1000);
-				            setTimeout(function(){
-				               $('#form-message-success').fadeIn();   
-		               	}, 1400);
+                    $.ajax({
+                        type: 'POST',
+                        url: 'php/getCupom.php',
+                        data: $(form).serialize(),
 
-		               	setTimeout(function(){
-				               $('#form-message-success').fadeOut();   
-		               	}, 8000);
+                        beforeSend: function () {
+                            $submit.css('display', 'block').text(waitText);
+                        },
+                        success: function (msg) {
+                            if (msg !== 'Matrícula não possui cupom disponível.') {
+                                $('#form-message-success').html(msg);
+                                $('#form-message-warning').hide();
+                                setTimeout(function () {
+                                    $('#contactForm').fadeIn();
+                                }, 1000);
+                                setTimeout(function () {
+                                    $('#form-message-success').fadeIn();
+                                }, 1400);
 
-		               	setTimeout(function(){
-				               $submit.css('display', 'none').text(waitText);  
-		               	}, 1400);
+                                setTimeout(function () {
+                                    $('#form-message-success').fadeOut();
+                                }, 8000);
 
-		               	setTimeout(function(){
-		               		$( '#contactForm' ).each(function(){
-											    this.reset();
-											});
-		               	}, 1400);
-			               
-			            } else {
-			               $('#form-message-warning').html(msg);
-				            $('#form-message-warning').fadeIn();
-				            $submit.css('display', 'none');
-			            }
-				      },
-				      error: function() {
-				      	$('#form-message-warning').html("Something went wrong. Please try again.");
-				         $('#form-message-warning').fadeIn();
-				         $submit.css('display', 'none');
-				      }
-			      });    		
-		  		} // end submitHandler
+                                setTimeout(function () {
+                                    $submit.css('display', 'none').text(waitText);
+                                }, 1400);
 
-			});
-		}
-	};
-	contactForm();
+                                setTimeout(function () {
+                                    $('#contactForm').each(function () {
+                                        this.reset();
+                                    });
+                                }, 1400);
+
+                            } else {
+                                $('#form-message-warning').html(msg);
+                                $('#form-message-warning').fadeIn();
+                                $submit.css('display', 'none');
+                            }
+                        },
+                        error: function () {
+                            $('#form-message-warning').html('Something went wrong. Please try again.');
+                            $('#form-message-warning').fadeIn();
+                            $submit.css('display', 'none');
+                        }
+                    });
+                } // end submitHandler
+
+            });
+        }
+    };
+    contactForm();
 
 })(jQuery);
