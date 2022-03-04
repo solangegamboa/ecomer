@@ -2,9 +2,10 @@
 
     'use strict';
 
-
     // Form
     var contactForm = function () {
+        $('#cpf').mask('000.000.000-00', {reverse: true});
+
         if ($('#contactForm').length > 0) {
             $('#contactForm').validate({
                 rules: {
@@ -81,4 +82,8 @@
     };
     contactForm();
 
+
+
 })(jQuery);
+
+
