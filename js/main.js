@@ -52,10 +52,6 @@
                                 }, 1400);
 
                                 setTimeout(function () {
-                                    $('#form-message-success').fadeOut();
-                                }, 8000);
-
-                                setTimeout(function () {
                                     $submit.css('display', 'none').text(waitText);
                                 }, 1400);
 
