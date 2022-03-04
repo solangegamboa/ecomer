@@ -43,8 +43,7 @@
                         success: function (msg) {
                             var mjson = JSON.parse(msg);
                             if (mjson.status === 'success') {
-                                msg = mjson.mensagem;
-                                $('#form-message-success').html(msg);
+                                $('#form-message-success').html(mjson.mensagem);
                                 $('#form-message-warning').hide();
                                 setTimeout(function () {
                                     $('#contactForm').fadeIn();
