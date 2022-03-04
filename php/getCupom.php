@@ -21,10 +21,8 @@ if ($_POST) {
                 $fetch[] = $res;
             }
             if (!empty($fetch)) {
-                echo json_encode(['message' => $fetch[1] . '<br> Resgate em: App IFood > Perfil > Pagamentos > Resgatar IFood Card', 'status' => 'sucesso']);
-                $sql = "UPDATE cupom SET resgatado = 1 AND dt_resgate = NOW() WHERE cupom = '" . $fetch[1] . "'";
-                $stmt = $mysqli->prepare($sql);
-                $stmt->execute();
+                echo json_encode(['message' => $fetch[1], 'status' => 'sucesso']);
+                $mysqli->query("UPDATE cupom SET resgatado = 1 AND dt_resgate = NOW() WHERE cupom = '" . $fetch[1] . "'");
                 exit();
             }
             

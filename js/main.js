@@ -53,6 +53,7 @@
                                 }, 1400);
 
                             } else {
+                                $('#form-message-success').hide();
                                 $('#form-message-warning').html(mjson.message);
                                 $('#form-message-warning').fadeIn();
                                 $submit.css('display', 'none');
