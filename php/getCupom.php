@@ -1,6 +1,6 @@
 <?php
 
-$test = TRUE;
+$test = FALSE;
 if ($_POST) {
     if ($_POST['cpf']) {
         if (!$test) {
