@@ -5,7 +5,7 @@
     // Form
     var contactForm = function () {
         $('#cpf').mask('000.000.000-00', {reverse: true});
-
+        $('#btn-copy').hide();
         if ($('#contactForm').length > 0) {
             $('#contactForm').validate({
                 rules: {
@@ -33,6 +33,7 @@
                             var mjson = JSON.parse(msg);
                             if (mjson.status === 'sucesso') {
                                 $('#form-message-success').html(mjson.message);
+                                document.getElementById("cupom").setAttribute('value', mjson.cupom);
                                 $('#form-message-warning').hide();
                                 setTimeout(function () {
                                     $('#contactForm').fadeIn();
@@ -40,6 +41,7 @@
 
                                 setTimeout(function () {
                                     $('#form-message-success').fadeIn();
+                                    $('#btn-copy').show();
                                 }, 1400);
 
                                 setTimeout(function () {
@@ -69,6 +71,7 @@
             });
         }
     };
+
     contactForm();
 
 

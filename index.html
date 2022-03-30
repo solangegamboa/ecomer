@@ -26,8 +26,6 @@
                         <div class="col-lg-7">
                             <div class="contact-wrap w-100 p-md-5 p-4">
                                 <h3 class="mb-4">Resgate seu cupom</h3>
-                                <div id="form-message-warning" class="mb-4"></div>
-                                <div id="form-message-success" class="mb-4"></div>
                                 <form method="POST" id="contactForm" name="contactForm" class="contactForm">
                                     <div class="row">
                                         <div class="col-lg-6">
@@ -52,10 +50,19 @@
                                             </div>
                                         </div>
                                         <div>
+                                            <div id="form-message-warning" class="mb-4"></div>
+                                            <div id="form-message-success" class="mb-4"></div>
+                                            <input type="hidden" name="cupom" id="cupom">
+                                            <button  class="btn btn-secondary" id="btn-copy" onclick="copy()">Copiar Cupom</button>
+                                        </div>
+                                        <div>
                                             <p>
-                                                <strong>Para resgatar o cupom: App IFood > Perfil > Pagamentos >
-                                                    Resgatar
-                                                    IFood Card</strong>
+                                                Para resgatar o cupom:<br>
+                                                    1 – Abra o app iFood e acesse Perfil;<br>
+                                                    2 – Clique em Carteira ou Pagamentos;<br>
+                                                    3 - Resgatar iFood Card;<br>
+                                                    4 – Digite o código informado no cartão ou virtual e confirme o resgate.<br>
+                                                <strong>IMPORTANTE: Não deixe espaços em branco no início ou fim da digitação.</strong>
                                             </p>
                                             <p>Sextouuu combina com Pizza 🍕😉😎<br>
                                                 Momento para se reunir com amigos, familiares e colocar o papo em
@@ -82,6 +89,29 @@
     </div>
 </section>
 
+<script type="application/javascript">
+    function copy() {
+        var text = document.getElementById('cupom').value;
+        var selected = false;
+        var el = document.createElement('textarea');
+        el.value = text;
+        el.setAttribute('readonly', '');
+        el.style.position = 'absolute';
+        el.style.left = '-9999px';
+        document.body.appendChild(el);
+        if (document.getSelection().rangeCount > 0) {
+            selected = document.getSelection().getRangeAt(0)
+        }
+        el.select();
+        document.execCommand('copy');
+        document.body.removeChild(el);
+        if (selected) {
+            document.getSelection().removeAllRanges();
+            document.getSelection().addRange(selected);
+        }
+        alert('Cupom copiado! ' + text);
+    }
+</script>
 <script src="js/jquery.min.js"></script>
 <script src="js/popper.js"></script>
 <script src="js/bootstrap.min.js"></script>
